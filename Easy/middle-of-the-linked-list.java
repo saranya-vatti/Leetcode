@@ -8,20 +8,14 @@
  */
 class Solution {
     public ListNode middleNode(ListNode head) {
-        if(head == null) return head;
-        ListNode curr = head;
-        int len = 0;
-        while(curr != null) {
-            curr = curr.next;
-            len++;
+        ListNode slowPointer = head;
+        ListNode fastPointer = head;
+        while(fastPointer != null) {
+            fastPointer = fastPointer.next;
+            if(fastPointer == null) return slowPointer;
+            fastPointer = fastPointer.next;
+            slowPointer = slowPointer.next;
         }
-        int mid = (len/2) + 1;
-        curr = head;
-        int index = 1;
-        while(curr != null && index < mid) {
-            index++;
-            curr = curr.next;
-        }
-        return curr;
+        return slowPointer;
     }
 }
