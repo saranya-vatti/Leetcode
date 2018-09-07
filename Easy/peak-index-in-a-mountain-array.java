@@ -1,8 +1,12 @@
 class Solution {
     public int peakIndexInMountainArray(int[] A) {
-        for(int i=0;i<A.length-1;i++) {
-            if(A[i+1]<A[i]) return i;
+        int lo = 0, hi = A.length - 1, mid;
+        while(lo<hi) {
+            mid = (lo+hi)/2;
+            if(A[mid] < A[mid+1]) lo = mid;
+            else if(A[mid-1]>A[mid]) hi = mid;
+            else return mid;
         }
-        return A.length-1;
+        return -1;
     }
 }
