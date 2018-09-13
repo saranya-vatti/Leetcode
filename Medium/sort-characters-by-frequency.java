@@ -1,38 +1,25 @@
 class Solution {
     public String frequencySort(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
-        HashMap<Integer, HashSet<Character>> map1 = new HashMap<>();
+        Character arr[] = new Character[s.length()]; 
         for(int i=0;i<s.length();i++) {
             char curr = s.charAt(i);
             if(!map.containsKey(curr)) {
                 map.put(curr, 0);
             }
-            int prevFreq = map.get(curr);
-            if(map1.containsKey(prevFreq)) {
-                if(map1.get(prevFreq).contains(curr))
-                    map1.get(prevFreq).remove(curr);
-            }
-            int newFreq = prevFreq + 1;
-            map.put(curr, newFreq);
-            HashSet<Character> set;
-            if(!map1.containsKey(newFreq)) {
-                set = new HashSet<Character>();
-            } else {
-                set = map1.get(newFreq);
-            }
-            set.add(curr);
-            map1.put(newFreq, set);
+            map.put(curr, map.get(curr) + 1);
+            arr[i] = curr;
         }
-        StringBuilder ans = new StringBuilder();
-        for(int i=s.length();i>0;i--) {
-            if(map1.containsKey(i)) {
-                HashSet<Character> set = map1.get(i);
-                for (char ch : set) {
-                    for(int j=0;j<i;j++) {
-                        ans.append(ch);
-                    }
-                }
+        Arrays.sort(arr);
+        Arrays.sort(arr, new Comparator<Character>() {
+            public int compare(Character c1, Character c2) {
+                if(map.get(c2) == map.get(c1)) return c1.compareTo(c2);
+                return map.get(c2) - map.get(c1);
             }
+        });
+        StringBuilder ans = new StringBuilder();
+        for(int i=0;i<arr.length;i++) {
+            ans.append(arr[i]);
         }
         return ans.toString();
     }
