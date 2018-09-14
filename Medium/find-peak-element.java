@@ -6,9 +6,16 @@ class Solution {
         
     }
     private int helper(int[] nums, int start, int end) {
-        if(start == end) return start;
-        if(nums[start+1] < nums[start]) return start;
-        if(nums[end] > nums[end-1]) return end;
-        return helper(nums, start+1, end-1);
+        if(start >= end) return start;
+        if(end == start+1) {
+            if(nums[end] > nums[start]) return end;
+            return start;
+        }
+        int mid = (start+end)/2;
+        if(nums[mid]>nums[mid-1]) {
+            if(nums[mid] > nums[mid+1]) return mid;
+            return helper(nums, mid+1, end);
+        }
+        return helper(nums, start, mid-1);
     }
 }
