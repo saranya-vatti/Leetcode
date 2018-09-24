@@ -31,12 +31,10 @@ class Solution {
         return Math.min(minWithRoot, minWithoutRoot);
     }
     private int rightMost(TreeNode root) {
-        if(root == null) return Integer.MAX_VALUE;
         while(root.right != null) root=root.right;
         return root.val;
     }
     private int leftMost(TreeNode root) {
-        if(root == null) return Integer.MAX_VALUE;
         while(root.left != null) root=root.left;
         return root.val;
     }
