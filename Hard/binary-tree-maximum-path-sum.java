@@ -8,28 +8,16 @@
  * }
  */
 class Solution {
+    int maxWithRoot = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        if(root == null) return 0;
-        if(root.left == null && root.right == null) {
-            return root.val;
-        }
-        int maxLeft = maxPathSum(root.left);
-        int maxRight = maxPathSum(root.right);
-        int maxLeftWithRoot = maxPathSumRoot(root.left);
-        int maxRightWithRoot = maxPathSumRoot(root.right);
-        if(root.left == null) {
-            return max(maxRight, maxRightWithRoot+root.val, root.val);
-        }
-        if(root.right == null) {
-            return max(maxLeft, maxLeftWithRoot+root.val, root.val);
-        }
-        return Math.max(max(maxLeft, maxRight, max(maxRightWithRoot+root.val, root.val+maxLeftWithRoot, maxRightWithRoot+root.val+maxLeftWithRoot)), root.val);
+        maxPath(root);
+        return maxWithRoot;
     }
-    private int maxPathSumRoot(TreeNode root) {
+    private int maxPath(TreeNode root) {
         if(root == null) return 0;
-        return root.val + max(maxPathSumRoot(root.left), maxPathSumRoot(root.right), 0);
-    }
-    private int max(int a, int b, int c) {
-        return Math.max(a, Math.max(b,c));
+        int left = Math.max(0, maxPath(root.left));
+        int right = Math.max(0, maxPath(root.right));
+        maxWithRoot = Math.max(left + right + root.val, maxWithRoot);
+        return Math.max(left, right) + root.val;
     }
 }
