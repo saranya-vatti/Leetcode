@@ -1,20 +1,20 @@
 class Solution {
-    boolean[] mem;
     public boolean canJump(int[] nums) {
-        mem = new boolean[nums.length];
-        mem[nums.length-1] = true;
-        helper(nums, 0);
-        return mem[0];
-    }
-    private boolean helper(int[] nums, int start) {
-        if(start >= nums.length || mem[start]) return true;
-        for(int j=1;j<=nums[start];j++) {
-            mem[start] = mem[start] || helper(nums, start+j);
-            if(mem[start]) {
-                return true;
-            }
+        int maxYouCanReach=0;
+        for(int i=0;i<nums.length;i++) {
+            if(i>maxYouCanReach) return false;
+            maxYouCanReach = Math.max(maxYouCanReach, i+nums[i]);
         }
-        mem[start] = false;
-        return false;
+        return true;
+        /*int start = 0;
+        int end = nums[start];
+        while(end<nums.length) {
+            for(;start<=end && start<nums.length;start++) {
+                end = Math.max(end, start+nums[start]);
+            }
+            if(end>=nums.length-1) return true;
+            if(nums[end] == 0) return false;
+        }
+        return true;*/
     }
 }
