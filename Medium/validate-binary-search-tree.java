@@ -8,18 +8,17 @@
  * }
  */
 class Solution {
+    Stack<Integer> st;
     public boolean isValidBST(TreeNode root) {
+        st = new Stack<>();
+        return inorder(root);
+    }
+    private boolean inorder(TreeNode root) {
         if(root == null) return true;
-        if(root.left != null && (root.left.val >= root.val || max(root.left) >= root.val)) return false;
-        if(root.right != null && (root.right.val <= root.val || root.val >= min(root.right))) return false;
-        return isValidBST(root.left) && isValidBST(root.right);
-    }
-    public int max(TreeNode root) {
-        while(root.right!=null) root = root.right;
-        return root.val;
-    }
-    public int min(TreeNode root) {
-        while(root.left!=null) root = root.left;
-        return root.val;
+        boolean flag = inorder(root.left);
+        if(!flag || (!st.isEmpty() && st.peek() >= root.val)) return false;
+        st.push(root.val);
+        //System.out.println(Arrays.toString(st.toArray()));
+        return flag && inorder(root.right);
     }
 }
